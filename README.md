@@ -20,3 +20,9 @@ WMICollector can be installed as a Windows Service, and logs the following stati
 - Disk Reads Per Second in Bytes
 
 The output can then be used for right-sizing.
+
+Installing the application as a Windows Service avoids premature termination due to users logging off, and allows the lifecycle of the application to be managed in the Windows Services console.
+
+## Cross Platform Compatibility
+
+As WMI is currently Windows-only, this application doesn't work on Linux or OSX just yet. However, the instrumentation code has been developed using dependency injection, so other OSes can be supported easily in future.
