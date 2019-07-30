@@ -26,12 +26,16 @@ namespace WMICollector
 
             Console.ReadLine();
 
+            Console.WriteLine("Stopping service.");
 
 
             plService.ConsoleStop();
 
+            Console.WriteLine("Service stopped.");
+
+
         }
 
-       
+
     }
 }

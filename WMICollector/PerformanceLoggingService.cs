@@ -33,32 +33,46 @@ namespace WMICollector
                 StartUp();
                 using (var metricCollector = Container.GetService<IMetricCollector>())
                 {
-                    var strCsvPath = Path.Combine(new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName, DateTime.Now.ToString("yyyyMMdd-HHmmss") + ".csv");
+                    string strCsvPath = null;
 
-                    using (var writer = new StreamWriter(strCsvPath))
-                    using (var csv = new CsvWriter(writer))
+                    string LogPath = Path.Combine(new FileInfo(Assembly.GetExecutingAssembly().Location).DirectoryName, "Logs");
+
+                    if (!Directory.Exists(LogPath))
+                        Directory.CreateDirectory(LogPath);
+
+                    do
                     {
-                        Console.WriteLine($"Writing records to {strCsvPath}");
-                        do
+                        string strCurrentCsvPath = null;
+                        strCsvPath = Path.Combine(LogPath, DateTime.Now.ToString("yyyyMMdd-HHmm") + ".csv");
+
+                        using (var writer = new StreamWriter(strCsvPath))
+                        using (var csv = new CsvWriter(writer))
                         {
-                            List<Object> lst = new List<object>();
+                            Console.WriteLine($"Writing records to {strCsvPath}");
                             do
                             {
-                                var obj = metricCollector.GetData();
+                                strCurrentCsvPath = Path.Combine(LogPath, DateTime.Now.ToString("yyyyMMdd-HHmm") + ".csv");
 
-                                lst.Add(obj);
+                                List<Object> lst = new List<object>();
+                                do
+                                {
+                                    var obj = metricCollector.GetData();
 
-                                Thread.Sleep(Interval);
-                            } while (!ct.IsCancellationRequested && lst.Count < 50);
-                            if (lst.Count > 0)
-                            {
-                                csv.WriteRecords(lst);
-                                csv.Flush();
-                                Console.WriteLine($"Wrote {lst.Count} records.");
+                                    lst.Add(obj);
 
-                            }
-                        } while (!ct.IsCancellationRequested);
-                    }
+                                    if (!ct.IsCancellationRequested)
+                                        Task.Delay(Interval);
+                                } while (!ct.IsCancellationRequested && lst.Count < 50);
+                                if (lst.Count > 0)
+                                {
+                                    csv.WriteRecords(lst);
+                                    csv.Flush();
+                                    Console.WriteLine($"Wrote {lst.Count} records.");
+
+                                }
+                            } while (!ct.IsCancellationRequested && strCsvPath == strCurrentCsvPath);
+                        }
+                    } while (!ct.IsCancellationRequested);
                 }
             }
             catch (Exception ex)
@@ -84,7 +98,7 @@ namespace WMICollector
         {
             if (cts != null)
                 cts.Cancel();
-            if (tsk != null)
+            if (tsk != null && !tsk.IsCompleted)
                 Task.WaitAll(tsk);
             base.OnStop();
         }

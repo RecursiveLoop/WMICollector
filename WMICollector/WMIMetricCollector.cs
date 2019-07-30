@@ -22,6 +22,7 @@ namespace WMICollector
             ManagementObjectSearcher Inventsearcher = new ManagementObjectSearcher(oMs, InventQuery);
             ManagementObjectCollection InventCollection = Inventsearcher.Get();
             dynamic returnVal = new ExpandoObject();
+            returnVal.TimeStamp = DateTime.Now;
 
             foreach (ManagementObject result in InventCollection)
             {
@@ -38,7 +39,7 @@ namespace WMICollector
 
             List<double> cpuTimes = new List<double>();
 
-            foreach(var cpuProp in InventCollection.Cast<ManagementObject>())
+            foreach (var cpuProp in InventCollection.Cast<ManagementObject>())
             {
                 var cpuVal = Convert.ToDouble(cpuProp["PercentProcessorTime"]);
                 cpuTimes.Add(cpuVal);
@@ -46,21 +47,27 @@ namespace WMICollector
 
             returnVal.CpuUsage = cpuTimes.Average();
 
-            //Performance
+            // Disk performance
             ObjectQuery PerfQuery = new ObjectQuery("SELECT * FROM Win32_PerfRawData_PerfDisk_PhysicalDisk");
             ManagementObjectSearcher Perfsearcher = new ManagementObjectSearcher(oMs, PerfQuery);
             ManagementObjectCollection PerfCollection = Perfsearcher.Get();
 
-            returnVal.TimeStamp = DateTime.Now;
+            UInt64 maxDiskWriteBytesPerSec = PerfCollection.Cast<ManagementObject>().Max(mo => (UInt64)mo["DiskWriteBytesPerSec"]);
+            UInt64 maxDiskReadBytesPerSec = PerfCollection.Cast<ManagementObject>().Max(mo => (UInt64)mo["DiskReadBytesPerSec"]);
+
+            returnVal.DiskWriteBytesPerSec = maxDiskWriteBytesPerSec;
+            returnVal.DiskReadBytesPerSec = maxDiskReadBytesPerSec;
 
 
-            foreach (ManagementObject mgt in PerfCollection)
-            {
+            PerfQuery = new ObjectQuery("SELECT * FROM Win32_PerfFormattedData_Tcpip_NetworkInterface");
+            Perfsearcher = new ManagementObjectSearcher(oMs, PerfQuery);
+            PerfCollection = Perfsearcher.Get();
 
-                returnVal.DiskWritesPerSec = (UInt32)mgt["DiskWritesPerSec"];
-                returnVal.DiskReadsPerSec = (UInt32)mgt["DiskReadsPerSec"];
-                break;
-            }
+            UInt64 totalBytesReceived = Convert.ToUInt64(PerfCollection.Cast<ManagementObject>().Sum(mo =>(long?) Convert.ToInt64( mo["BytesReceivedPerSec"])).GetValueOrDefault(0));
+            UInt64 totalBytesSent = Convert.ToUInt64(PerfCollection.Cast<ManagementObject>().Sum(mo => (long?)Convert.ToInt64(mo["BytesSentPerSec"])).GetValueOrDefault(0));
+
+            returnVal.TotalBytesReceived = totalBytesReceived;
+            returnVal.TotalBytesSent = totalBytesSent;
 
 
             return returnVal;
