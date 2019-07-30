@@ -14,7 +14,7 @@ namespace WMICollector
     public class PerformanceLoggingService : ServiceBase
     {
         static int Interval = 100;
-        static ServiceProvider Container;
+        static ServiceProvider svcContainer;
 
         static Task tsk = null;
 
@@ -31,7 +31,7 @@ namespace WMICollector
             {
                 Console.WriteLine("Metric Collector and Logger by Amazon Web Services");
                 StartUp();
-                using (var metricCollector = Container.GetService<IMetricCollector>())
+                using (var metricCollector = svcContainer.GetService<IMetricCollector>())
                 {
                     string strCsvPath = null;
 
@@ -62,6 +62,7 @@ namespace WMICollector
 
                                     if (!ct.IsCancellationRequested)
                                         Task.Delay(Interval);
+
                                 } while (!ct.IsCancellationRequested && lst.Count < 50);
                                 if (lst.Count > 0)
                                 {
@@ -117,7 +118,7 @@ namespace WMICollector
         {
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddScoped<IMetricCollector, WMIMetricCollector>();
-            Container = serviceCollection.BuildServiceProvider();
+            svcContainer = serviceCollection.BuildServiceProvider();
         }
     }
 }
