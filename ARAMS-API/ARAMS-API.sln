@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29123.88
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AWSServerless1", "AWSServerless1\AWSServerless1.csproj", "{D88C2177-8791-462F-B0AC-1A9DA2648212}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ARAMS-API", "ARAMS-API\ARAMS-API.csproj", "{9D185792-8DA2-43C3-89F1-D06087B501D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D88C2177-8791-462F-B0AC-1A9DA2648212}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D88C2177-8791-462F-B0AC-1A9DA2648212}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D88C2177-8791-462F-B0AC-1A9DA2648212}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D88C2177-8791-462F-B0AC-1A9DA2648212}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D185792-8DA2-43C3-89F1-D06087B501D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D185792-8DA2-43C3-89F1-D06087B501D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D185792-8DA2-43C3-89F1-D06087B501D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D185792-8DA2-43C3-89F1-D06087B501D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {9A393FC0-E213-45E5-868B-B987ABFDBE0F}
+		SolutionGuid = {4DA0498B-9B90-4335-888D-3BF2A61E7A01}
 	EndGlobalSection
 EndGlobal

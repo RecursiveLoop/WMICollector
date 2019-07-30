@@ -10,7 +10,7 @@
     "region"      : "ap-southeast-1",
     "configuration" : "Release",
     "framework"     : "netcoreapp2.1",
-    "s3-prefix"     : "AWSServerless1/",
+    "s3-prefix"     : "ARAMS-API/",
     "template"      : "serverless.template",
     "template-parameters" : "\"ShouldCreateBucket\"=\"false\";\"BucketName\"=\"\"",
     "s3-bucket"           : "elgin-sg-builds",

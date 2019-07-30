@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 
-namespace AWSServerless1
+namespace ARAMS_API
 {
     /// <summary>
     /// This class extends from APIGatewayProxyFunction which contains the method FunctionHandlerAsync which is the 
     /// actual Lambda function entry point. The Lambda handler field should be set to
     /// 
-    /// AWSServerless1::AWSServerless1.LambdaEntryPoint::FunctionHandlerAsync
+    /// ARAMS-API::ARAMS-API.LambdaEntryPoint::FunctionHandlerAsync
     /// </summary>
     public class LambdaEntryPoint :
         // When using an ELB's Application Load Balancer as the event source change 

@@ -63,12 +63,12 @@ If already installed check if new version is available.
 
 Execute unit tests
 ```
-    cd "AWSServerless1/test/AWSServerless1.Tests"
+    cd "ARAMS-API/test/ARAMS-API.Tests"
     dotnet test
 ```
 
 Deploy application
 ```
-    cd "AWSServerless1/src/AWSServerless1"
+    cd "ARAMS-API/src/ARAMS-API"
     dotnet lambda deploy-serverless
 ```

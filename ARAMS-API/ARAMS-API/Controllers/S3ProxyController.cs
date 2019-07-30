@@ -12,7 +12,7 @@ using Amazon.S3.Model;
 
 using Newtonsoft.Json;
 
-namespace AWSServerless1.Controllers
+namespace ARAMS_API.Controllers
 {
     /// <summary>
     /// ASP.NET Core controller acting as a S3 Proxy.
