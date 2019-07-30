@@ -7,6 +7,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace WMICollector
 {
@@ -18,10 +19,19 @@ namespace WMICollector
         {
             var plService = new PerformanceLoggingService();
 
+
             plService.ConsoleStart(args);
+
+            Console.WriteLine("Service started, press enter to stop.");
+
+            Console.ReadLine();
+
+
+
+            plService.ConsoleStop();
 
         }
 
-        
+       
     }
 }

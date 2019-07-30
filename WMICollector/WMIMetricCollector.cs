@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Management;
 using System.Text;
 using System.Linq;
+using System.Dynamic;
 
 namespace WMICollector
 {
@@ -13,14 +14,14 @@ namespace WMICollector
 
         }
 
-        public PerfLogEntry GetData()
+        public dynamic GetData()
         {
             ManagementScope oMs = new System.Management.ManagementScope("root\\cimv2");
             //Inventory
             ObjectQuery InventQuery = new ObjectQuery("SELECT * FROM Win32_OperatingSystem");
             ManagementObjectSearcher Inventsearcher = new ManagementObjectSearcher(oMs, InventQuery);
             ManagementObjectCollection InventCollection = Inventsearcher.Get();
-            PerfLogEntry returnVal = new PerfLogEntry();
+            dynamic returnVal = new ExpandoObject();
 
             foreach (ManagementObject result in InventCollection)
             {

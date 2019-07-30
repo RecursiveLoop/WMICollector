@@ -7,6 +7,6 @@ namespace WMICollector
 {
     public interface IMetricCollector : IDisposable
     {
-        PerfLogEntry GetData();
+        dynamic GetData();
     }
 }
